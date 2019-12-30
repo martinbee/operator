@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { Button } from 'react-native-material-ui';
 
+
 // store results in a context
 // home screen with get started - layer 1
 // ask for number of translations desired - layer 2

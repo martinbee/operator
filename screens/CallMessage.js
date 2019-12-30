@@ -5,16 +5,9 @@ import {
   ScrollView,
   View,
   Text,
+  TextInput,
 } from 'react-native';
-import Slider from '@react-native-community/slider';
 import { Button } from 'react-native-material-ui';
-
-// store results in a context
-// home screen with get started - layer 1
-// ask for number of translations desired - layer 2
-// ask for input - layer 3
-
-// show results - modal
 
 const Colors = {
   primary: '#1292B4',
@@ -64,8 +57,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const NumberOfCalls = ({ navigation }) => {
-  const goToCallMessage = useCallback(() => navigation.navigate('CallMessage'), [navigation]);
+const CallMessage = ({ navigation }) => {
+  const sendMessage = useCallback(() => console.log('did it'), []);
 
   return (
     <SafeAreaView>
@@ -76,23 +69,17 @@ const NumberOfCalls = ({ navigation }) => {
         <View style={styles.body}>
           <View style={styles.sectionContainer}>
             <Text style={styles.sectionTitle}>
-              How many calls do you want your message to go through?
+              What is your message?
             </Text>
-            <Slider
-              style={{ width: 200, height: 40 }}
-              minimumValue={0}
-              maximumValue={1}
-              minimumTrackTintColor="#FFFFFF"
-              maximumTrackTintColor="#000000"
-            />
+            <TextInput />
           </View>
           <Button
-            onPress={goToCallMessage}
+            onPress={sendMessage}
             style={{
               container: styles.button,
               text: styles.buttonText,
             }}
-            text="Next"
+            text="Send Message"
             primary
             raised
           />
@@ -102,8 +89,8 @@ const NumberOfCalls = ({ navigation }) => {
   );
 };
 
-NumberOfCalls.navigationOptions = {
-  title: 'Number of Calls',
+CallMessage.navigationOptions = {
+  title: 'Message',
 };
 
-export default NumberOfCalls;
+export default CallMessage;
