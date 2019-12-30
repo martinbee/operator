@@ -7,6 +7,22 @@ import Home from './screens/Home';
 import NumberOfCalls from './screens/NumberOfCalls';
 import CallMessage from './screens/CallMessage';
 import Results from './screens/Results';
+import { CallDetailsProvider } from './contexts/callDetails';
+
+// store results in a context
+// prohibit moving forward unless values are picked (number of calls)
+// extract styles out to share them
+// when message is sent:
+  // navigate to modal
+  // show loading screen
+  // for now only parse through one translation
+  // parse then show result
+  // x goes back to main screen and cleans context
+
+// home screen with get started - layer 1
+// ask for number of translations desired - layer 2
+// ask for input - layer 3
+// show results - modal
 
 const uiTheme = {
   palette: {
@@ -38,8 +54,10 @@ const AppContainer = createAppContainer(AppNavigator);
 
 const App = () => (
   <ThemeContext.Provider value={getTheme(uiTheme)}>
-    <StatusBar barStyle="dark-content" />
-    <AppContainer />
+    <CallDetailsProvider>
+      <StatusBar barStyle="dark-content" />
+      <AppContainer />
+    </CallDetailsProvider>
   </ThemeContext.Provider>
 );
 

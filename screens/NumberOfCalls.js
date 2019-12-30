@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useContext, useCallback } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -8,13 +8,11 @@ import {
 } from 'react-native';
 import Slider from '@react-native-community/slider';
 import { Button } from 'react-native-material-ui';
+import { CallDetailsContext } from '../contexts/callDetails';
 
-// store results in a context
-// home screen with get started - layer 1
-// ask for number of translations desired - layer 2
-// ask for input - layer 3
-
-// show results - modal
+// set a range for slider
+// fix slider styles
+// store slider value in context when button is pressed
 
 const Colors = {
   primary: '#1292B4',
@@ -47,12 +45,14 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '600',
     color: Colors.black,
+    flex: 2,
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
+  slider: {
+    height: 40,
+  },
+  numberOfCallsText: {
+    textAlign: 'center',
+    fontSize: 25,
   },
   button: {
     flex: 1,
@@ -65,7 +65,9 @@ const styles = StyleSheet.create({
 });
 
 const NumberOfCalls = ({ navigation }) => {
+  const { numberOfCalls, setNumberOfCalls } = useContext(CallDetailsContext);
   const goToCallMessage = useCallback(() => navigation.navigate('CallMessage'), [navigation]);
+  console.log(numberOfCalls)
 
   return (
     <SafeAreaView>
@@ -78,13 +80,21 @@ const NumberOfCalls = ({ navigation }) => {
             <Text style={styles.sectionTitle}>
               How many calls do you want your message to go through?
             </Text>
-            <Slider
-              style={{ width: 200, height: 40 }}
-              minimumValue={0}
-              maximumValue={1}
-              minimumTrackTintColor="#FFFFFF"
-              maximumTrackTintColor="#000000"
-            />
+            <View style={{ flex: 1 }}>
+              <Slider
+                value={numberOfCalls}
+                onValueChange={setNumberOfCalls}
+                style={styles.slider}
+                minimumValue={1}
+                maximumValue={10}
+                step={1}
+                minimumTrackTintColor="#eeee"
+                maximumTrackTintColor="#000000"
+              />
+              <Text style={styles.numberOfCallsText}>
+                {numberOfCalls}
+              </Text>
+            </View>
           </View>
           <Button
             onPress={goToCallMessage}
