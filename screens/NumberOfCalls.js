@@ -104,6 +104,7 @@ const NumberOfCalls = ({ navigation }) => {
 
 NumberOfCalls.navigationOptions = {
   title: 'Number of Calls',
+  headerLeft: null,
 };
 
 export default NumberOfCalls;

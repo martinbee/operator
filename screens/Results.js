@@ -57,9 +57,9 @@ const styles = StyleSheet.create({
 });
 
 const Results = ({ navigation }) => {
-  const goToHome = useCallback(() => {
-    navigation.navigate('Home');
+  const restartCallFlow = useCallback(() => {
     // clear context
+    navigation.navigate('NumberOfCalls');
   }, [navigation]);
 
   return (
@@ -78,7 +78,7 @@ const Results = ({ navigation }) => {
             </Text>
           </View>
           <Button
-            onPress={goToHome}
+            onPress={restartCallFlow}
             style={{
               container: styles.button,
               text: styles.buttonText,
