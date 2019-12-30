@@ -1,4 +1,4 @@
-import React, { useContext, useCallback } from 'react';
+import React, { memo, useContext, useCallback } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const CallMessage = ({ navigation }) => {
+const CallMessage = memo(({ navigation }) => {
   const { message, setMessage } = useContext(CallDetailsContext);
   const sendMessage = useCallback(() => navigation.navigate('Results'), [navigation]);
   const isButtonDisabled = !message || message.trim().length < 1;
@@ -83,7 +83,7 @@ const CallMessage = ({ navigation }) => {
       </ScrollView>
     </SafeAreaView>
   );
-};
+});
 
 CallMessage.navigationOptions = {
   title: 'Message',

@@ -1,4 +1,4 @@
-import React, { useContext, useCallback } from 'react';
+import React, { memo, useContext, useCallback } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const NumberOfCalls = ({ navigation }) => {
+const NumberOfCalls = memo(({ navigation }) => {
   const { numberOfCalls, setNumberOfCalls } = useContext(CallDetailsContext);
   const goToCallMessage = useCallback(() => navigation.navigate('CallMessage'), [navigation]);
 
@@ -105,7 +105,7 @@ const NumberOfCalls = ({ navigation }) => {
       </ScrollView>
     </SafeAreaView>
   );
-};
+});
 
 NumberOfCalls.navigationOptions = {
   title: 'Number of Calls',

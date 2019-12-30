@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { memo, useCallback } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = memo(({ navigation }) => {
   const goToNumberOfCalls = useCallback(() => navigation.navigate('NumberOfCalls'), [navigation]);
 
   return (
@@ -85,7 +85,7 @@ const HomeScreen = ({ navigation }) => {
       </ScrollView>
     </SafeAreaView>
   );
-};
+});
 
 HomeScreen.navigationOptions = {
   title: 'Welcome to Operator!',

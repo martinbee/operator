@@ -1,4 +1,4 @@
-import React, { useContext, useCallback } from 'react';
+import React, { memo, useContext, useState, useEffect, useCallback } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -7,7 +7,10 @@ import {
   Text,
 } from 'react-native';
 import { Button } from 'react-native-material-ui';
+import { YANDEX_API_KEY } from 'react-native-dotenv';
 import { CallDetailsContext } from '../contexts/callDetails';
+
+const url = 'https://translate.yandex.net/api/v1.5/tr.json/translate';
 
 const Colors = {
   primary: '#1292B4',
@@ -57,13 +60,40 @@ const styles = StyleSheet.create({
   },
 });
 
-const Results = ({ navigation }) => {
+const Results = memo(({ navigation }) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [translation, setTranslation] = useState('');
   const { message, resetContext } = useContext(CallDetailsContext);
+
+  useEffect(() => {
+    const getData = async () => {
+      const firstResponse = await fetch(`${url}?key=${YANDEX_API_KEY}&text=${message}&lang=es`);
+      const firstResults = await firstResponse.json();
+      const firstTranslation = firstResults.text[0];
+
+      const secondResponse = await fetch(`${url}?key=${YANDEX_API_KEY}&text=${firstTranslation}&lang=en`);
+      const secondResults = await secondResponse.json();
+      const secondTranslation = secondResults.text[0];
+
+      setTranslation(secondTranslation);
+      setIsLoading(false);
+    };
+
+    getData();
+  }, []);
 
   const restartCallFlow = useCallback(() => {
     resetContext();
     navigation.navigate('NumberOfCalls');
   }, [navigation]);
+
+  if (isLoading) {
+    return (
+      <View>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
 
   return (
     <SafeAreaView>
@@ -77,7 +107,7 @@ const Results = ({ navigation }) => {
               Original Message: {message}
             </Text>
             <Text style={styles.sectionTitle}>
-              New Message:
+              New Message: {translation}
             </Text>
           </View>
           <Button
@@ -94,7 +124,7 @@ const Results = ({ navigation }) => {
       </ScrollView>
     </SafeAreaView>
   );
-};
+});
 
 Results.navigationOptions = {
   title: 'Results',
