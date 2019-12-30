@@ -11,6 +11,13 @@ import { YANDEX_API_KEY } from 'react-native-dotenv';
 import { CallDetailsContext } from '../contexts/callDetails';
 
 const url = 'https://translate.yandex.net/api/v1.5/tr.json/translate';
+const languages = [
+  'es', 
+  'ru', 
+  'vi', 
+  'fr', 
+  'he',
+];
 
 const Colors = {
   primary: '#1292B4',
@@ -60,22 +67,43 @@ const styles = StyleSheet.create({
   },
 });
 
+const makeCalls = async (initialMessage, numberOfCalls) => {
+  let message = initialMessage;
+
+  for (let i = 0; i < numberOfCalls; i++) {
+    const language = languages[i];
+    const urlWithParams = `${url}?key=${YANDEX_API_KEY}&text=${message}&lang=${language}`;
+
+    const response = await fetch(urlWithParams);
+    const results = await response.json();
+    const translation = results.text[0];
+
+    message = translation;
+    console.log(message);
+  }
+
+  const englishUrl = `${url}?key=${YANDEX_API_KEY}&text=${message}&lang=en`;
+  const finalResponse = await fetch(englishUrl);
+  const finalResults = await finalResponse.json();
+  console.log(finalResults)
+
+  return finalResults.text[0];
+};
+
 const Results = memo(({ navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [translation, setTranslation] = useState('');
-  const { message, resetContext } = useContext(CallDetailsContext);
+  const [finalMessage, setFinalMessage] = useState('');
+  const {
+    resetContext,
+    numberOfCalls,
+    message,
+  } = useContext(CallDetailsContext);
 
   useEffect(() => {
     const getData = async () => {
-      const firstResponse = await fetch(`${url}?key=${YANDEX_API_KEY}&text=${message}&lang=es`);
-      const firstResults = await firstResponse.json();
-      const firstTranslation = firstResults.text[0];
+      const newMessage = await makeCalls(message, numberOfCalls);
 
-      const secondResponse = await fetch(`${url}?key=${YANDEX_API_KEY}&text=${firstTranslation}&lang=en`);
-      const secondResults = await secondResponse.json();
-      const secondTranslation = secondResults.text[0];
-
-      setTranslation(secondTranslation);
+      setFinalMessage(newMessage);
       setIsLoading(false);
     };
 
@@ -107,7 +135,7 @@ const Results = memo(({ navigation }) => {
               Original Message: {message}
             </Text>
             <Text style={styles.sectionTitle}>
-              New Message: {translation}
+              New Message: {finalMessage}
             </Text>
           </View>
           <Button

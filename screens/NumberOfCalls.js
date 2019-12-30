@@ -81,7 +81,7 @@ const NumberOfCalls = memo(({ navigation }) => {
                 onValueChange={setNumberOfCalls}
                 style={styles.slider}
                 minimumValue={1}
-                maximumValue={10}
+                maximumValue={5}
                 step={1}
                 minimumTrackTintColor="#eeee"
                 maximumTrackTintColor="#000000"
