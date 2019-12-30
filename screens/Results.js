@@ -5,7 +5,6 @@ import {
   ScrollView,
   View,
   Text,
-  TextInput,
 } from 'react-native';
 import { Button } from 'react-native-material-ui';
 
@@ -57,8 +56,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const CallMessage = ({ navigation }) => {
-  const sendMessage = useCallback(() => navigation.navigate('Results'), [navigation]);
+const Results = ({ navigation }) => {
+  const goToHome = useCallback(() => {
+    navigation.navigate('Home');
+    // clear context
+  }, [navigation]);
 
   return (
     <SafeAreaView>
@@ -69,17 +71,19 @@ const CallMessage = ({ navigation }) => {
         <View style={styles.body}>
           <View style={styles.sectionContainer}>
             <Text style={styles.sectionTitle}>
-              What is your message?
+              Original Message:
             </Text>
-            <TextInput />
+            <Text style={styles.sectionTitle}>
+              New Message:
+            </Text>
           </View>
           <Button
-            onPress={sendMessage}
+            onPress={goToHome}
             style={{
               container: styles.button,
               text: styles.buttonText,
             }}
-            text="Send Message"
+            text="Make Another Call"
             primary
             raised
           />
@@ -89,8 +93,9 @@ const CallMessage = ({ navigation }) => {
   );
 };
 
-CallMessage.navigationOptions = {
-  title: 'Message',
+Results.navigationOptions = {
+  title: 'Results',
+  headerLeft: null,
 };
 
-export default CallMessage;
+export default Results;

@@ -6,6 +6,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import Home from './screens/Home';
 import NumberOfCalls from './screens/NumberOfCalls';
 import CallMessage from './screens/CallMessage';
+import Results from './screens/Results';
 
 const uiTheme = {
   palette: {
@@ -26,6 +27,7 @@ const AppNavigator = createStackNavigator(
     Home,
     NumberOfCalls,
     CallMessage,
+    Results,
   },
   {
     initialRouteName: 'Home',
