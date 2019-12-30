@@ -29,8 +29,8 @@ const App = () => (
   <>
     <StatusBar barStyle="dark-content" />
     <SafeAreaView>
-      <ScrollView 
-        style={styles.scrollView} 
+      <ScrollView
+        style={styles.scrollView}
         contentContainerStyle={styles.scrollViewContainer}
       >
         <View style={styles.body}>
@@ -41,7 +41,10 @@ const App = () => (
             </Text>
           </View>
           <Button
-            style={{ container: styles.button }}
+            style={{
+              container: styles.button,
+              text: styles.buttonText,
+            }}
             text="Get Started!"
             primary
             raised
@@ -85,6 +88,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  buttonText: {
+    fontSize: 22,
   },
 });
 
