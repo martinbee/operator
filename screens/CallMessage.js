@@ -1,13 +1,14 @@
-import React, { useCallback } from 'react';
+import React, { useContext, useCallback } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
   ScrollView,
   View,
-  Text,
-  TextInput,
 } from 'react-native';
+import { TextField } from 'react-native-materialui-textfield';
 import { Button } from 'react-native-material-ui';
+
+import { CallDetailsContext } from '../contexts/callDetails';
 
 const Colors = {
   primary: '#1292B4',
@@ -32,20 +33,9 @@ const styles = StyleSheet.create({
     display: 'flex',
   },
   sectionContainer: {
-    marginTop: 20,
     paddingHorizontal: 24,
     flex: 5,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
+    justifyContent: 'center',
   },
   button: {
     flex: 1,
@@ -58,6 +48,7 @@ const styles = StyleSheet.create({
 });
 
 const CallMessage = ({ navigation }) => {
+  const { message, setMessage } = useContext(CallDetailsContext);
   const sendMessage = useCallback(() => navigation.navigate('Results'), [navigation]);
 
   return (
@@ -68,10 +59,13 @@ const CallMessage = ({ navigation }) => {
       >
         <View style={styles.body}>
           <View style={styles.sectionContainer}>
-            <Text style={styles.sectionTitle}>
-              What is your message?
-            </Text>
-            <TextInput />
+            <TextField
+              fontSize={25}
+              labelFontSize={20}
+              label="What is your message?"
+              value={message}
+              onChangeText={setMessage}
+            />
           </View>
           <Button
             onPress={sendMessage}
@@ -79,7 +73,7 @@ const CallMessage = ({ navigation }) => {
               container: styles.button,
               text: styles.buttonText,
             }}
-            text="Send Message"
+            text="Place Call"
             primary
             raised
           />

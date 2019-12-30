@@ -10,10 +10,6 @@ import Slider from '@react-native-community/slider';
 import { Button } from 'react-native-material-ui';
 import { CallDetailsContext } from '../contexts/callDetails';
 
-// set a range for slider
-// fix slider styles
-// store slider value in context when button is pressed
-
 const Colors = {
   primary: '#1292B4',
   white: '#FFF',
@@ -67,7 +63,6 @@ const styles = StyleSheet.create({
 const NumberOfCalls = ({ navigation }) => {
   const { numberOfCalls, setNumberOfCalls } = useContext(CallDetailsContext);
   const goToCallMessage = useCallback(() => navigation.navigate('CallMessage'), [navigation]);
-  console.log(numberOfCalls)
 
   return (
     <SafeAreaView>
