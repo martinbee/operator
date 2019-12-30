@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
 const CallMessage = ({ navigation }) => {
   const { message, setMessage } = useContext(CallDetailsContext);
   const sendMessage = useCallback(() => navigation.navigate('Results'), [navigation]);
+  const isButtonDisabled = !message || message.trim().length < 1;
 
   return (
     <SafeAreaView>
@@ -76,6 +77,7 @@ const CallMessage = ({ navigation }) => {
             text="Place Call"
             primary
             raised
+            disabled={isButtonDisabled}
           />
         </View>
       </ScrollView>

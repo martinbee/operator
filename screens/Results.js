@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useContext, useCallback } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -7,6 +7,7 @@ import {
   Text,
 } from 'react-native';
 import { Button } from 'react-native-material-ui';
+import { CallDetailsContext } from '../contexts/callDetails';
 
 const Colors = {
   primary: '#1292B4',
@@ -57,8 +58,10 @@ const styles = StyleSheet.create({
 });
 
 const Results = ({ navigation }) => {
+  const { message, resetContext } = useContext(CallDetailsContext);
+
   const restartCallFlow = useCallback(() => {
-    // clear context
+    resetContext();
     navigation.navigate('NumberOfCalls');
   }, [navigation]);
 
@@ -71,7 +74,7 @@ const Results = ({ navigation }) => {
         <View style={styles.body}>
           <View style={styles.sectionContainer}>
             <Text style={styles.sectionTitle}>
-              Original Message:
+              Original Message: {message}
             </Text>
             <Text style={styles.sectionTitle}>
               New Message:

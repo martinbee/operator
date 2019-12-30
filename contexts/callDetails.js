@@ -1,4 +1,4 @@
-import React, { createContext, memo, useState } from 'react';
+import React, { createContext, memo, useState, useCallback } from 'react';
 
 const initialState = {
   numberOfCalls: 1,
@@ -7,13 +7,20 @@ const initialState = {
 
 const CallDetailsContext = createContext(initialState);
 const CallDetailsProvider = memo(({ children }) => {
-  const [numberOfCalls, setNumberOfCalls] = useState(1);
-  const [message, setMessage] = useState('');
+  const [numberOfCalls, setNumberOfCalls] = useState(initialState.numberOfCalls);
+  const [message, setMessage] = useState(initialState.message);
+
+  const resetContext = useCallback(() => {
+    setNumberOfCalls(initialState.numberOfCalls);
+    setMessage(initialState.message);
+  }, [setNumberOfCalls, setMessage, initialState]);
+
   const context = {
     numberOfCalls,
     setNumberOfCalls,
     message,
     setMessage,
+    resetContext,
   };
 
   return (
