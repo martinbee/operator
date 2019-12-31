@@ -8,42 +8,15 @@ import {
 import { TextField } from 'react-native-materialui-textfield';
 import { Button } from 'react-native-material-ui';
 
+import { sharedStyles } from '../sharedStyles';
 import { CallDetailsContext } from '../contexts/callDetails';
 
-const Colors = {
-  primary: '#1292B4',
-  white: '#FFF',
-  lighter: '#F3F3F3',
-  light: '#DAE1E7',
-  dark: '#444',
-  black: '#000',
-};
-
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.white,
-    height: '100%',
-  },
-  scrollViewContainer: {
-    display: 'flex',
-    flex: 1,
-  },
-  body: {
-    flex: 1,
-    display: 'flex',
-  },
+  ...sharedStyles,
   sectionContainer: {
-    paddingHorizontal: 24,
-    flex: 5,
+    ...sharedStyles.sectionContainer,
+    marginTop: 0,
     justifyContent: 'center',
-  },
-  button: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttonText: {
-    fontSize: 22,
   },
 });
 
